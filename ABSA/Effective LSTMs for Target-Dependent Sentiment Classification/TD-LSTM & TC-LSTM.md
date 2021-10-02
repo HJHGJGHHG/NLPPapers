@@ -18,9 +18,3 @@
 ## 三、TC-LSTM
 &emsp;&emsp;为了加强目标词与上下文间的联系，先将 target words 字向量（当时应该是词向量）取平均得到 $V_{target}$，作为 target words 的代替。而后将 $V_{target}$ 与原来的词向量拼接。相较于 TD-LSTM，TC-LSTM 整合了target words与context words的相互关联信息。模型同样用 softmax 函数作为最后一层的激活函数来实现分类，用交叉熵作为损失函数来计算损失。
 <center><img src="C:\Users\HJHGJGHHG\Desktop\论文笔记与复现\Effective LSTMs for Target-Dependent Sentiment Classification/TC-LSTM.png"  style="zoom:30%;" width="100%"/></center>
-
-## 四、代码复现
-### 1.数据集介绍
-&emsp;&emsp;Twitter，具体说明见 data/readme.txt
-
-### 2.结果：
