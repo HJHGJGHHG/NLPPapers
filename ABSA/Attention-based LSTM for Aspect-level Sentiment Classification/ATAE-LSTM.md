@@ -13,10 +13,10 @@
 
 ### 2.Attention-based LSTM, AT-LSTM
 &emsp;&emsp;直接看模型图：
-<center><img src="C:\Users\HJHGJGHHG\Desktop\论文笔记与复现\ABSA\Attention-based LSTM for Aspect-level Sentiment Classification\AT-LSTM.png"  style="zoom:30%;" width="100%"/></center>
+<center><img src="AT-LSTM.png"  style="zoom:30%;" width="100%"/></center>
 
 &emsp;&emsp;模型首先通过一个LSTM模型得到每个词的隐藏状态向量，然后将其与Aspect Embedding连接，Aspect Embedding作为模型参数一起训练，从而得到句子在给定的aspect下的权值向量α，最后再根据权值向量对隐藏向量进行赋值，得到最终的句子表示，然后预测情感。
 
 ### 3.ATAE-LSTM
 &emsp;&emsp;在 AT-LSTM 的基础上，在句子输入时额外再拼接对象词向量，就是 ATAE-LSTM 模型，即同时在模型的输入部分和隐态部分引入aspect信息。与 TC-LSTM的思想类似，使用这种方法进一步在句子表示中更好地利用目标词和每个上下文词之间的关系。模型结构如下图：
-<center><img src="C:\Users\HJHGJGHHG\Desktop\论文笔记与复现\ABSA\Attention-based LSTM for Aspect-level Sentiment Classification\ATAE-LSTM.png"  style="zoom:30%;" width="100%"/></center>
+<center><img src="ATAE-LSTM.png"  style="zoom:30%;" width="100%"/></center>
