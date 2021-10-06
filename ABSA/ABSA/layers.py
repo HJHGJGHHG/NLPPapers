@@ -37,14 +37,14 @@ class SqueezeEmbedding(nn.Module):
 
 class Attention(nn.Module):
     def __init__(self, embed_dim, hidden_dim=None, out_dim=None, n_head=1, score_function='dot_product', dropout=0):
-        ''' Attention Mechanism
+        """ Attention Mechanism
         :param embed_dim:
         :param hidden_dim:
         :param out_dim:
         :param n_head: num of head (Multi-Head Attention)
         :param score_function: scaled_dot_product / mlp (concat) / bi_linear (general dot)
         :return (?, q_len, out_dim,)
-        '''
+        """
         super(Attention, self).__init__()
         if hidden_dim is None:
             hidden_dim = embed_dim // n_head

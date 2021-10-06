@@ -7,8 +7,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, random_split
 import config
 from layers import SqueezeEmbedding, Attention, NoQueryAttention
-from models import LSTM, TD_LSTM, TC_LSTM, ATAE_LSTM, DynamicLSTM
-
+from models import LSTM, TD_LSTM, TC_LSTM, ATAE_LSTM_Q, DynamicLSTM
 
 
 def add_arguments(args):
@@ -19,7 +18,7 @@ def add_arguments(args):
         'lstm': LSTM,
         'td_lstm': TD_LSTM,
         'tc_lstm': TC_LSTM,
-        'atae_lstm': ATAE_LSTM,
+        'atae_lstm': ATAE_LSTM_Q,
     }
     dataset_files = {
         'twitter': {
@@ -254,7 +253,8 @@ def build_iter():
     assert 0 <= args.val_dataset_ratio < 1
     if args.val_dataset_ratio > 0:
         val_dataset_len = int(len(train_dataset) * args.val_dataset_ratio)
-        train_dataset, val_dataset = random_split(train_dataset, (len(train_dataset) - val_dataset_len, val_dataset_len))
+        train_dataset, val_dataset = random_split(train_dataset,
+                                                  (len(train_dataset) - val_dataset_len, val_dataset_len))
     else:
         val_dataset = test_dataset
     
@@ -274,47 +274,27 @@ def set_seed(args):
         torch.cuda.manual_seed(args.seed)
 
 
-class ATAE_LSTM(nn.Module):
-    def __init__(self, embedding_matrix, args):
-        super(ATAE_LSTM, self).__init__()
-        self.embed = nn.Embedding.from_pretrained(torch.tensor(embedding_matrix, dtype=torch.float, device=args.device))
-        self.squeeze_embedding = SqueezeEmbedding()
-        self.lstm = DynamicLSTM(args.embed_dim * 2, args.hidden_dim, num_layers=1, batch_first=True)
-        self.attention = NoQueryAttention(args.hidden_dim + args.embed_dim, score_function='bi_linear')
-        self.dense = nn.Linear(args.hidden_dim, args.polarities_dim)
-    
-    def forward(self, inputs):
-        text_indices, aspect_indices = inputs[0], inputs[1]
-        x_len = torch.sum(text_indices != 0, dim=-1)
-        x_len_max = torch.max(x_len)
-        aspect_len = torch.sum(aspect_indices != 0, dim=-1).float()
-        
-        x = self.embed(text_indices)
-        x = self.squeeze_embedding(x, x_len)
-        aspect = self.embed(aspect_indices)
-        aspect_pool = torch.div(torch.sum(aspect, dim=1), aspect_len.unsqueeze(1))
-        aspect = aspect_pool.unsqueeze(1).expand(-1, x_len_max, -1)
-        x = torch.cat((aspect, x), dim=-1)
-        
-        h, (_, _) = self.lstm(x, x_len)
-        ha = torch.cat((h, aspect), dim=-1)
-        _, score = self.attention(ha)
-        output = torch.squeeze(torch.bmm(score, h), dim=1)
-        
-        out = self.dense(output)
-        return score
-    
+"""
 if __name__ == '__main__':
     train_iter, test_iter, val_iter, args, embedding_matrix = build_iter()
     model = ATAE_LSTM(embedding_matrix, args).to(args.device)
     for i_batch, sample_batched in enumerate(train_iter):
         inputs = [sample_batched[col].to(args.device) for col in args.inputs_cols]
         
-        #print(len(inputs))
-        #print(inputs[1].size())
-
+        print(len(inputs))
+        # print(inputs[1].size())
+        
         print(model(inputs).size())
-        print(model(inputs).shape[0])
-        #print(model(inputs)[1].size())
+        # print(model(inputs).shape[0])
+        print(model(inputs)[0].size())
+        print(model(inputs)[0])
+
+        outputs = model(inputs)
+        targets = sample_batched['polarity'].to(args.device)
+        criterion = nn.CrossEntropyLoss()
+        loss = criterion(outputs, targets)
+        print(loss.item())
+        
+        
         break
-    
+"""

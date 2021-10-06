@@ -3,7 +3,7 @@
 
 import torch
 import torch.nn as nn
-from layers import SqueezeEmbedding, NoQueryAttention
+from layers import SqueezeEmbedding, Attention, NoQueryAttention
 
 
 class DynamicLSTM(nn.Module):
@@ -170,7 +170,7 @@ class ATAE_LSTM(nn.Module):
         aspect_pool = torch.div(torch.sum(aspect, dim=1), aspect_len.unsqueeze(1))  # [batch_size, embedding_dim]
         aspect = aspect_pool.unsqueeze(1).expand(-1, x_len_max,
                                                  -1)  # same size as x : [batch_size, packed_len, embedding_dim]
-        x = torch.cat((aspect, x), dim=-1)  # same size as x : [batch_size, packed_len, 2 * embedding_dim]
+        x = torch.cat((aspect, x), dim=-1)  # [batch_size, packed_len, 2 * embedding_dim]
         
         h, (_, _) = self.lstm(x, x_len)  # h: output of LSTM: [batch_size, packed_len, hidden_dim]
         ha = torch.cat((h, aspect), dim=-1)  # [batch_size, packed_len, hidden_dim + embedding_dim]
@@ -178,4 +178,38 @@ class ATAE_LSTM(nn.Module):
         output = torch.squeeze(torch.bmm(score, h), dim=1)
         
         out = self.dense(output)
+        return out
+
+
+class ATAE_LSTM_Q(nn.Module):
+    def __init__(self, embedding_matrix, args):
+        super(ATAE_LSTM_Q, self).__init__()
+        self.embed = nn.Embedding.from_pretrained(torch.tensor(embedding_matrix, dtype=torch.float, device=args.device))
+        self.squeeze_embedding = SqueezeEmbedding()
+        self.lstm = DynamicLSTM(args.embed_dim * 2, args.hidden_dim, num_layers=1, batch_first=True)
+        self.attention = Attention(args.embed_dim, score_function='bi_linear')
+        self.dense = nn.Linear(args.hidden_dim, args.polarities_dim)
+        self.index = torch.LongTensor([0]).to(args.device)
+    
+    def forward(self, inputs):
+        text_indices, aspect_indices = inputs[0], inputs[1]  # [batch_size, seq_len]
+        x_len = torch.sum(text_indices != 0, dim=-1)
+        x_len_max = torch.max(x_len)
+        aspect_len = torch.sum(aspect_indices != 0, dim=-1).float()
+        
+        x = self.embed(text_indices)  # [batch_size, seq_len, embedding_dim]
+        x = self.squeeze_embedding(x, x_len)
+        aspect = self.embed(aspect_indices)  # [batch_size, packed_len, embedding_dim]
+        aspect_pool = torch.div(torch.sum(aspect, dim=1), aspect_len.unsqueeze(1))  # [batch_size, embedding_dim]
+        aspect = aspect_pool.unsqueeze(1).expand(-1, x_len_max,
+                                                 -1)  # same size as x : [batch_size, packed_len, embedding_dim]
+        x = torch.cat((aspect, x), dim=-1)  # same size as x : [batch_size, packed_len, 2 * embedding_dim]
+        
+        h, (_, _) = self.lstm(x, x_len)  # h: output of LSTM: [batch_size, packed_len, hidden_dim]
+        _, score = self.attention(h, aspect)
+        output = torch.squeeze(torch.bmm(score, h), dim=1)
+        
+        out = self.dense(output)
+        out = torch.index_select(out, 1, self.index)
+        out = torch.squeeze(out, dim=1)
         return out

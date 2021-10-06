@@ -110,7 +110,6 @@ if __name__ == '__main__':
     # load iterator
     train_iter, test_iter, val_iter, args, embedding_matrix = build_iter()
     
-    
     # model
     model = args.model_class(embedding_matrix, args).to(args.device)
     # start training
@@ -121,4 +120,3 @@ if __name__ == '__main__':
     model.eval()
     test_acc, test_f1 = evaluation(args, model, test_iter)
     logger.info('>> test_acc: {:.4f}, test_f1: {:.4f}'.format(test_acc, test_f1))
-    
