@@ -18,7 +18,7 @@
 
 * 实体(Entity)：抽象或客观存在的概念体。（饭店）
 * 方面(Aspect)：刻画实体不同方面的词。(饭菜口味、服务、大小、位置 ……)
-* 目标(Target)：一般情况下指实体。  
+* 目标(Target)：一般情况下指实体。
 &emsp;&emsp;我们现在可以看出 aspect 和 target 的区别了。**target** 一般指文中的描述实体，是**粗粒度任务**，而且**基本上会直接出现在文本中**；而 **aspect** 则为**细粒度任务**，值同一 target 的不同方面，而且**不一定会直接出现在文本中**。我们所说的 ABSA 通常指 aspect-level sentiment analysis。target 仅在部分任务中提到，如存在多个 target 的文本。
 &emsp;&emsp;对于 aspect，根据具体的任务又分为 aspect term 和 aspect category。
 * aspect term：**文本中刻画实体的属性词**。如上文中的句子，aspect term 就只有口味与服务。
