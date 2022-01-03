@@ -16,9 +16,9 @@ $$
 &emsp;&emsp;原文如下：
 > We suspect that for large values of $d_k$, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients. To counteract this effect, we scale the dot products by $\frac{1}{\sqrt{d_k}}$.
 
-&emsp;&emsp;所以$\sqrt{d_k}$是一个调节因子，得内积不至于太大，否则softmax后就非0即1了，梯度会有问题。基于纯 Transformer 的实验如果不收敛，检查有没有除$\sqrt{d_k}$！！
+&emsp;&emsp;所以$\sqrt{d_k}$是一个调节因子，得内积不至于太大，否则 softmax 后就非0即1了，梯度会有问题。基于纯 Transformer 的实验如果不收敛，检查有没有除$\sqrt{d_k}$！！
 
-2. 要不要softmax？
+2. 要不要 softmax ？
 
 TODO
 
@@ -39,4 +39,24 @@ TODO
 *  target：I/love/machine/learning/<end>
 
 &emsp;&emsp;为了并行计算出 decoder output，我们需要进行 Mask 操作。具体来说，传统 Seq2Seq 中 Decoder 使用的是 RNN 模型，因此在训练过程中输入 $t$ 时刻的词，模型无论如何也看不到未来时刻的词，因为循环神经网络是时间驱动的，只有当 $t$ 时刻运算结束了，才能看到 $t+1$ 时刻的词。而 Transformer Decoder 抛弃了 RNN，改为 Self-Attention，由此就产生了一个问题，在训练过程中，整个 ground truth 都暴露在 Decoder 下，这不是妥妥的抄答案么，与常规的翻译过程不合。
-&emsp;&emsp;那么如何让第 $t+1$ 个词只获得前 $t$ 个词的信息呢？我们考虑在 Attention Score矩阵上做文章。
+&emsp;&emsp;那么如何让第 $t+1$ 个词只获得前 $t$ 个词的信息呢？我们考虑在 Attention Scaled Score矩阵上做文章。
+&emsp;&emsp;其实 Mask 非常简单，首先生成一个下三角全 0，上三角全为负无穷的矩阵，然后将其与 Attention Scaled Score 矩阵按位相加：
+$$
+\begin{align}
+Mask\ Self\ Atte&ntion=softmax(\frac{\mathbf{Q}\mathbf{K}^T}{ \sqrt{d_k}}+\mathbf{M}_{n\times n})\mathbf{V}\\
+\mathbf{M}_{n\times n}=&
+\begin{bmatrix}
+0 & (-inf) & \cdots & (-inf) \\
+0 & 0 &\cdots & (-inf) \\
+\vdots & \vdots & \ddots &\vdots \\
+0 & 0 & \cdots & (-inf)\\
+0 & 0 & \cdots & 0\\
+\end{bmatrix}_{n\times n}
+\end{align}
+$$
+
+<center><img src="4.png"  style="zoom:100%;" width="110%"/></center>
+&emsp;&emsp;经 softmax 后，-inf的部分即变为零，可认为是没有相关。
+
+## 四、Encoder-Decoder Attention（Decoder）
+&emsp;&emsp;其实这一部分的计算流程和前面 Encoder 中的 Self-Attention 很相似，结构也一摸一样，唯一不同的是这里的 $\mathbf{K}，\mathbf{V} $ 为 Encoder 的输出，$\mathbf{Q}$ 为 Decoder 中 Masked Self-Attention 的输出
