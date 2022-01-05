@@ -8,7 +8,7 @@
 |  BERT-Base  last hidden + mean  | 87.8 |     |
 |  RoBERTa-Base  last hidden + mean  | 91.6 |     |
 
-&emsp;&emsp;注：STS-B 指标为 Spearman correlation，MRPC指标为 F1。BERT 模型均为 uncased。
+&emsp;&emsp;注：STS-B 指标为 Spearman correlation，MRPC指标为 F1。BERT 模型均为 uncased。  
 &emsp;&emsp;策略：
 * CLS：最后一层的 Pooling 作为句向量；
 * last hidden + mean： 最后一层序列的输出平均

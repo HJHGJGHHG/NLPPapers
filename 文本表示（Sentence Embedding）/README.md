@@ -16,7 +16,10 @@
 
 
 ## Interaction-based
-* **BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.** *Jacob Devlin Ming-Wei Chang Kenton Lee Kristina Toutanova* [[code]](https://github.com/google-research/bert) -***BERT*** [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/PLM/BERT) [[experiment]]()
+* **BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.** *Jacob Devlin Ming-Wei Chang Kenton Lee Kristina Toutanova* [[code]](https://github.com/google-research/bert) -***BERT*** [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/PLM/BERT) [[experiment]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/BERT%20%26%20RoBERTa)
 
 
 ## Representation-based
+* **Learning Deep Structured Semantic Models
+for Web Search using Clickthrough Data**  *Xiaodong He, Jianfeng Gao, Li Deng, Alex Acero, Larry Heck* [[pdf]](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/cikm2013_DSSM_fullversion.pdf) [[code]](https://github.com/InsaneLife/dssm) -***DSSM***
+* **Siamese Recurrent Architectures for Learning Sentence Similarity**  *Aditya Thyagarajan*  (AAAI16) [[home page]](https://ojs.aaai.org/index.php/AAAI/article/view/10350)  [[code]](https://github.com/dhwajraj/deep-siamese-text-similarity) -***Siam-LSTM***
