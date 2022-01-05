@@ -13,3 +13,10 @@
 * STS-16 (SemEval-2016 task 1: Semantic textual similarity, monolingual and cross-lingual evaluation)  [[home page]](https://aclanthology.org/S16-1081/)
 * SICK-R (SemEval-2014 task 1: valuation of compositional distributional semantic models on full sentences through semantic relatedness and textual entailment)  [[home page]](https://marcobaroni.org/composes/sick.html)
 * MRPC (Microsoft Research Paraphrase Corpus)  [[home page]](https://www.microsoft.com/en-us/download/details.aspx?id=52398)
+
+
+## Interaction-based
+* **BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.** *Jacob Devlin Ming-Wei Chang Kenton Lee Kristina Toutanova* [[code]](https://github.com/google-research/bert) -***BERT*** [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/PLM/BERT) [[experiment]]()
+
+
+## Representation-based
