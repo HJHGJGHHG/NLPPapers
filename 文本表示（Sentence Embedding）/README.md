@@ -22,4 +22,6 @@
 ## Representation-based
 * **Learning Deep Structured Semantic Models
 for Web Search using Clickthrough Data**  *Xiaodong He, Jianfeng Gao, Li Deng, Alex Acero, Larry Heck* [[pdf]](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/cikm2013_DSSM_fullversion.pdf) [[code]](https://github.com/InsaneLife/dssm) -***DSSM***
-* **Siamese Recurrent Architectures for Learning Sentence Similarity**  *Aditya Thyagarajan*  (AAAI16) [[home page]](https://ojs.aaai.org/index.php/AAAI/article/view/10350)  [[code]](https://github.com/dhwajraj/deep-siamese-text-similarity) -***Siam-LSTM***  [[my code]]()
+* **Siamese Recurrent Architectures for Learning Sentence Similarity**  *Aditya Thyagarajan*  (AAAI16) [[home page]](https://ojs.aaai.org/index.php/AAAI/article/view/10350)  [[code]](https://github.com/dhwajraj/deep-siamese-text-similarity) -***Siam-LSTM***  [[my code]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Siam-LSTM/code)
+* **Skip-Thought Vectors**  *Ryan Kiros, Yukun Zhu, Ruslan Salakhutdinov, Richard S. Zemel, Antonio Torralba, Raquel Urtasun, Sanja Fidler*  (NIPS2015)  [[pdf]](https://arxiv.org/pdf/1506.06726.pdf)  -***Skip-Thought***
+* **SimCSE: Simple Contrastive Learning of Sentence Embeddings**  *Tianyu Gaoy, Xingcheng Yaoz, Danqi Chen*  (EMNLP2021)  [[pdf]](https://arxiv.org/pdf/2104.08821.pdf)  -***SimCSE***
