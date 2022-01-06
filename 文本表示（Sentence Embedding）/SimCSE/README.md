@@ -28,7 +28,7 @@ $$
 ## 二、无监督 SimCSE
 &emsp;&emsp; 接下来我们接着上文，介绍 SimCSE 的无监督版本。  
 ### 1. 正负例对构造 
-&emsp;&emsp; 上文我们说到，SimCSE 使用 Dropout 构造正例对。我们设 $N=batch\_ size$，那么对于某个 batch ：${x_1,x_2,\cdots,x_N}$，让其通过 PLM 得到向量组 $\mathbf{h}_1^{(0)},\mathbf{h}_2^{(0)},\cdots,\mathbf{h}_N^{(0)}$，然后**再将这组向量过一遍 PLM** 得到 $\mathbf{h}_1^{(1)},\mathbf{h}_2^{(1)},\cdots,\mathbf{h}_N^{(1)}$，那么我们有正例对：$\{(\mathbf{h}_i^{(0)},\mathbf{h}_i^{(1)})\}_{i=1}^N$。而负例对是 in-batch negatives，就是将其他句子第二次通过 PLM 的向量作为负例，则有负例对： $\{(\mathbf{h}_i^{(0)},\mathbf{h}_j^{(1)})\}$。   
+&emsp;&emsp; 上文我们说到，SimCSE 使用 Dropout 构造正例对。我们设 $N=batch\_ size$，那么对于某个 batch ：${x_1,x_2,\cdots,x_N}$，让其通过 PLM 得到向量组 $\mathbf{h}_1^{(0)},\mathbf{h}_2^{(0)},\cdots,\mathbf{h}_N^{(0)}$，然后**再将这组句子过一遍 PLM** 得到 $\mathbf{h}_1^{(1)},\mathbf{h}_2^{(1)},\cdots,\mathbf{h}_N^{(1)}$，那么我们有正例对：$\{(\mathbf{h}_i^{(0)},\mathbf{h}_i^{(1)})\}_{i=1}^N$。而负例对是 in-batch negatives，就是将其他句子第二次通过 PLM 的向量作为负例，则有负例对： $\{(\mathbf{h}_i^{(0)},\mathbf{h}_j^{(1)})\}$。   
 &emsp;&emsp; Dropout 本质是***临时*** ***随机***丢弃一部分神经元，所以直接通过两次 PLM 的结果会略有不同，但是二者的自然语义完全一致。  
 
 ### 2. 损失函数
