@@ -7,7 +7,6 @@ $$
 $$
 
 2. Uniformity：所有数据向量均匀分布的程度  
-
 $$
 \mathcal{l}_{uniformity}\overset{\underset{\mathrm{def}}{}}{=}\log\mathbb{E}\ e^{-2||f(x)-f(y)||^2}, \ x,y\overset{\underset{\mathrm{i.i.d}}{}}{\sim} p_{\mathcal{D}}
 $$
@@ -23,8 +22,6 @@ $$
 &emsp;&emsp; 一个朴素的想法便是取 $(x_i,x_i)$ 为正例对，$(x_i,x_j),i\neq j$ 为负例对，当然这样的泛化能力会很差。一般来说，我们会使用一些数据扩增手段，取 $(g(x_i),h(x_i))$ 为正例对，其中 $g$ 与 $h$ 为数据增强函数；将 $(g(x_i),h(x_j))$ 等视为负例对。这种框架下的对比学习核心就是***区分两个实例是否是由同一个源数据采样/增强得来。***其实就是让模型学习区分每个句子的最本质的特征~  
 <center><img src="2.png"  style="zoom:100%;" width="80%"/></center>
 
-
-
 &emsp;&emsp; 那么如何选择合适的数据增广方法呢？传统的 EDA 与同义词替换，删除不重要的单词，语序重排等等本质上是在离散的 Token 空间上操作的，鲁棒性很差，容易引入负面噪声。  
 &emsp;&emsp; 不同于 ConSERT 将修改放在 Embedding 层，SimCSE 给出了一个更加**简单**的方案（点题！！）：***将 Dropout 作为增强***！  
 
@@ -35,7 +32,7 @@ $$
 &emsp;&emsp; Dropout 本质是***临时*** ***随机***丢弃一部分神经元，所以直接通过两次 PLM 的结果会略有不同，但是二者的自然语义完全一致。  
 
 ### 2. 损失函数
-&emsp;&emsp; 在一个 batch 内，我们有优化目标：
+&emsp;&emsp; 在一个 batch 内，我们有优化目标：  
 $$
 \min-\sum_{i=1}^N \log\frac{e^{sim(\mathbf{h}_i^{(0)},\mathbf{h}_i^{(1)}/\tau)}}{\sum_{j=1}^N e^{sim(\mathbf{h}_i^{(0)},\mathbf{h}_j^{(1)}/\tau)}}
 $$
