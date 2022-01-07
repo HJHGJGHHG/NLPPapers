@@ -46,9 +46,9 @@ $$
 ## 四、细节
 &emsp;&emsp;接下来对 SimCSE 中的相关细节做进一步分析~  
 ### 1. 伪负例问题
-&emsp;&emsp;在 SimCSE 中，我们选择一个 batch 中的所有其他样本作为负例，我们称负例中有很相似的样本为伪负例。很显然伪负例会极大程度地干扰模型。  
+&emsp;&emsp;在 SimCSE 中，我们选择一个 batch 中的所有其他样本作为负例，我们称负例中有**语义很相似**的样本为伪负例。很显然伪负例会极大程度地干扰模型。  
 &emsp;&emsp;我们可以使用增大语料库，随机 shuffle，增大 batch size 等方法降低伪负例的影响。当然选择更合理的负例构造也是很好的思路。  
 
 ### 2. 公式（3）中温度系数 $\tau$ 的作用
 &emsp;&emsp;一个定性分析：公式（3）去掉 log 与 $\tau$ 就是一个 Softmax，而由于余弦相似度的值域是 [−1,1]，范围太小导致 Softmax 无法对正负样本给出足够大的差距，最终结果就是模型训练不充分，所以需要一个较小的 $\tau$ （论文中为 0.05）适量放大 logits。  
-&emsp;&emsp;具体的分析见 [[温度超参的作用]]()
+&emsp;&emsp;具体的分析见 [[温度超参的作用]](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SimCSE/%E6%B8%A9%E5%BA%A6%E8%B6%85%E5%8F%82%E7%9A%84%E4%BD%9C%E7%94%A8.md)
