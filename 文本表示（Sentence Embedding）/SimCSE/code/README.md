@@ -27,7 +27,7 @@ $$
 &emsp;&emsp;然后把 One-Hot 形式的 label 转换成 index，即 label=$[1,0,3,2]$。  
 
 ### 3. 复现指标
-&emsp;&emsp;预训练模型取 bert-base-uncased，指标为 Spearman’s correlation。最佳指标如下：  
+&emsp;&emsp;预训练模型取 bert-base-uncased，指标为 Spearman’s correlation。最佳指标如下（测试集）：  
 | | SimCSE 原论文 | 复现 |
 | :---: |  :---: |  :---: |
 | STS-B | 76.85 |  |
