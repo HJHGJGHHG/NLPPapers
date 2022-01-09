@@ -3,7 +3,7 @@
 &emsp;&emsp;我们将句向量模型分为 Representation-based（双塔式） 与 Interaction-based（交互式）两类。双塔式模型即用一个编码器分别给两个文本编码出句向量，然后把两个向量融合过一个浅层的分类器；交互式就是把两个文本一起输入进编码器，在编码的过程中让它们相互交换信息，再得到最终结果。如下图：
 <center><img src="1.webp"  style="zoom:100%;" width="110%"/></center>
 
-## Benchmark  
+## Benchmark & Datasets  
 #### 1. Semantic Textual Similarity
 * STS-B (SemEval 2017 Task 1: Semantic Textual Similarity - Multilingual and Cross-lingual Focused Evaluation)  [[home page]](http://ixa2.si.ehu.eus/stswiki/index.php/STSbenchmark)  
 * STS-12 (Semeval-2012 task 6: A pilot on semantic textual similarity)  [[home page]](https://aclanthology.org/S12-1051/)
@@ -25,3 +25,8 @@ for Web Search using Clickthrough Data**  *Xiaodong He, Jianfeng Gao, Li Deng, A
 * **Siamese Recurrent Architectures for Learning Sentence Similarity**  *Aditya Thyagarajan*  (AAAI16) [[home page]](https://ojs.aaai.org/index.php/AAAI/article/view/10350)  [[code]](https://github.com/dhwajraj/deep-siamese-text-similarity) -***Siam-LSTM***  [[my code]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Siam-LSTM/code)
 * **Skip-Thought Vectors**  *Ryan Kiros, Yukun Zhu, Ruslan Salakhutdinov, Richard S. Zemel, Antonio Torralba, Raquel Urtasun, Sanja Fidler*  (NIPS2015)  [[pdf]](https://arxiv.org/pdf/1506.06726.pdf)  -***Skip-Thought***
 * **SimCSE: Simple Contrastive Learning of Sentence Embeddings**  *Tianyu Gaoy, Xingcheng Yaoz, Danqi Chen*  (EMNLP2021)  [[pdf]](https://arxiv.org/pdf/2104.08821.pdf) [[code]](https://github.com/princeton-nlp/SimCSE)  -***SimCSE*** [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SimCSE) [[my code]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SimCSE/code)
+
+
+## Analysis
+* **Representation Degeneration Problem in Training Natural Language Generation Models**  *Jun Gao, Di He, Xu Tan, Tao Qin, Liwei Wang, Tie-Yan Liu*  (ICLR2019)  [[pdf]](https://arxiv.org/pdf/1907.12009.pdf)  [[note]]()
+* **Improving Neural Language Generation with Spectrum Control**  *Lingxiao Wang, Jing Huang, Kevin Huang, Ziniu Hu, Guangtao Wang, Quanquan Gu*  (ICLR2020)  [[pdf]](https://openreview.net/attachment?id=ByxY8CNtvr&name=original_pdf)  [[note]]()
