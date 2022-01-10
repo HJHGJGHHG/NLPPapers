@@ -54,4 +54,4 @@ $$
 &emsp;&emsp;具体的分析见 [[温度超参的作用]](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SimCSE/%E6%B8%A9%E5%BA%A6%E8%B6%85%E5%8F%82%E7%9A%84%E4%BD%9C%E7%94%A8.md)
 
 ### 3. 对比学习与各项异性问题
-&emsp;&emsp;见 [[对比学习与表征空间各向异性]]()
+&emsp;&emsp;见 [[对比学习与表征空间各向异性]](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SimCSE/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%A1%A8%E5%BE%81%E7%A9%BA%E9%97%B4%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7.md)
