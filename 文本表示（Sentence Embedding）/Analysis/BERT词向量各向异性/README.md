@@ -3,5 +3,5 @@
 &emsp;&emsp;承载三篇论文：
 * [Representation Degeneration Problem in Training Natural Language Generation Models](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Analysis/BERT%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/Representation%20Degeneration%20Problem%20in%20Training%20Natural%20Language%20Generation%20Models.pdf)
 * [Improving Neural Language Generation with Spectrum Control](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Analysis/BERT%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/Improving%20Neural%20Language%20Generation%20with%20Spectrum%20Control.pdf)
-* [Isotropy in the Contextual Embedding Space: Clusters and Manifolds]()
+* [Isotropy in the Contextual Embedding Space: Clusters and Manifolds](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Analysis/BERT%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7/Isotropy%20in%20the%20Contextual%20Embedding%20Space%EF%BC%9AClusters%20and%20Manifolds.pdf)
 ## 一、Representation Degeneration Problem in Training Natural Language Generation Models
