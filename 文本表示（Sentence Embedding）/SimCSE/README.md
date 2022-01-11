@@ -58,7 +58,7 @@ $$
 
 ## 五、问题与思考
 ### 1. SimCSE 的缺陷
-&emsp;&emsp;直接使用 BERT 内部天然的 dropout 作为增强方法，虽然简单，但还是有很多遗留问题，具体参见 [SimCSE 加强版！]()
+&emsp;&emsp;直接使用 BERT 内部天然的 dropout 作为增强方法，虽然简单，但还是有很多遗留问题，具体参见 [SimCSE 加强版！](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/ESimCSE)
 
 ### 2. 无监督训练停止策略
 &emsp;&emsp;SimCSE 可以拉远负例对表示，从而缓解了坍缩到一起的问题，那么问题来了，拉远到什么程度是个头呢？SimCSE 包括 ConSERT 都是用 STS-B 开发集频繁评估，保留最佳效果作为 checkpoint，但这种做法显然不是像预训练那种真正的无监督训练，如何构建更合理的停止策略呢？
