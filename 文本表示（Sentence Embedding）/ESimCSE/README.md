@@ -18,7 +18,7 @@
 
 <center><img src="3.png"  style="zoom:100%;" width="100%"/></center>
 
-&emsp;&emsp;设某个 tokenize 后的句子为 $x=\{x_1,x_2,\cdots,x_N\}$，随机采样数 $dup\_len \in [0,\max(2,int(dup\_rate\times N))]$，注意 $dup\_len$ 没有定死，作者说是能进一步拓展多样性（....）再以均匀分布采样，最后把采得的序列加入原序列中。
+&emsp;&emsp;设某个 tokenize 后的句子为 $x=\{x_1,x_2,\cdots,x_N\}$，随机采样数 $dup\_len \in [0,\max(2,int(dup\_rate\times N))]$，注意 $dup\_len$ 没有定死，作者说是能进一步拓展多样性（不然又引入正例对长度差恒定的信息了），再以均匀分布采样，最后把采得的序列加入原序列中。
 
 ### 2. Momentum Contrast（动量对抗学习）
 &emsp;&emsp;动量对抗最早是 CV 中提出的，用以扩大负例对的数量同时比直接扩大 batch size 要节省显存。核心就是在 SimCSE 的框架下额外维护一个固定大小的队列 $Q$ (一般比batch大很多)与一个队列 encoder 记为 $f_{\theta_{m}}$，初始时 $Q=\{\},f_{\theta_{m}}=f_{\theta_{e}}=PLM$，也即队列初始为空，$f_{\theta_{m}}$与 $f_{\theta_{e}}$ 都为预训练模型。每次将句嵌打入队列，如果队满则最早入队者出队。训练时不仅将 in-batch 的所有其他句嵌作为负例，还将队列中其他 batch 都视为负例。如下图：（[来源]([(6条消息) 广告行业中那些趣事系列47：NLP中对比学习SOTA必学模型ESimCSE_abc50319的专栏-CSDN博客](https://blog.csdn.net/abc50319/article/details/122007687?ops_request_misc=%7B%22request%5Fid%22%3A%22164189264316781685365640%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&request_id=164189264316781685365640&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-4-122007687.first_rank_v2_pc_rank_v29&utm_term=esimcse&spm=1018.2226.3001.4187))）
