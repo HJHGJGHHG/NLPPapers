@@ -55,3 +55,16 @@ $$
 
 ### 3. 对比学习与各项异性问题
 &emsp;&emsp;见 [[对比学习与表征空间各向异性]](https://github.com/HJHGJGHHG/NLPPapers/blob/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SimCSE/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0%E4%B8%8E%E8%A1%A8%E5%BE%81%E7%A9%BA%E9%97%B4%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7.md)
+
+## 五、问题与思考
+### 1. SimCSE 的缺陷
+&emsp;&emsp;直接使用 BERT 内部天然的 dropout 作为增强方法，虽然简单，但还是有很多遗留问题，具体参见 [SimCSE 加强版！]()
+
+### 2. 无监督训练停止策略
+&emsp;&emsp;SimCSE 可以拉远负例对表示，从而缓解了坍缩到一起的问题，那么问题来了，拉远到什么程度是个头呢？SimCSE 包括 ConSERT 都是用 STS-B 开发集频繁评估，保留最佳效果作为 checkpoint，但这种做法显然不是像预训练那种真正的无监督训练，如何构建更合理的停止策略呢？
+
+### 3. 
+&emsp;&emsp;论文中给出了这张图：
+<center><img src="4.png"  style="zoom:100%;" width="80%"/></center>
+
+&emsp;&emsp;比较了各种 dropout 策略与随机删除一个词的 alignment 与 uniformity。问题是 ***Fixed 0.1*** 与 ***No dropout*** 两个方法中，正例对两个向量完全相同，那为什么 alignment 效果会变差呢？？
