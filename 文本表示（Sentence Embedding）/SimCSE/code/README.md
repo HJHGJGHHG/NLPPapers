@@ -51,7 +51,7 @@ $$
 ### 2. 复现指标
 | | SimCSE 原论文 | 复现 |
 | :---: |  :---: |  :---: |
-| STS-B | 84.25 |  |
+| STS-B | 84.25 | 84.81 |
 
 &emsp;&emsp;在 STS-B 上的调参过程：($mlm$=0.15，$\tau$=0.05，max_len=64，epochs=2)  
 |  | $\lambda$ | Batch Size | Dropout | LR | dev | test |
