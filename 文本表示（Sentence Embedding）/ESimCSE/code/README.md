@@ -1,4 +1,4 @@
-# 0ESimCSE 复现
+# ESimCSE 复现
 ## 一、数据集
 &emsp;&emsp;为了与 unsup-SimCSE 直接比较，此处还是使用 unsup-SimCSE 的 wiki 语料进行无监督训练。考虑到该数据集中有单个单词组成的句子，所以 Word Repetition 随机采样数修改为： $dup\_len \in [0,\max(1,int(dup\_rate\times N))]$
 
