@@ -15,4 +15,4 @@
 
 ## 二、感受
 &emsp;&emsp;不知道大家看完有什么想法，我倒是觉得这个方法是 ~~画蛇添足~~ 锦上添花，虽然说比 sup-SimCSE 低一些，但是提出了一个新的思路。
-&emsp;&emsp;槽点依旧很多，一是不使用数据增强，同一个 input 过两个 BERT 区别真的不是很大；再一个就是 $L^{reg}$，到底是要 finetune 还是不要 finetune？不放借鉴 ESimCSE 动量更新一下 $BERT_F$。
+&emsp;&emsp;槽点依旧很多，一是不使用数据增强，同一个 input 过两个 BERT 区别真的不是很大；再一个就是 $L^{reg}$，到底是要 finetune 还是不要 finetune？不妨借鉴 ESimCSE 动量更新一下 $BERT_F$。
