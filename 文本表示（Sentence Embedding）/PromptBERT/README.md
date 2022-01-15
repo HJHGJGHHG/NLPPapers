@@ -62,3 +62,6 @@ $$
 ##### C. soft prompt
 &emsp;&emsp;也没太看明白...
 
+
+## 三、结合 prompt 与对比学习
+&emsp;&emsp;我们的基本思路就是使用不同的 template 生成不同的 view。设两个 template 诱导出的句嵌为 $\mathbf{h}_i$ 与 $\mathbf{h}'_i$，如果只是取正例对为 $(\mathbf{h}_i,\mathbf{h}'_i)$，负例对为 $(\mathbf{h}_i,\mathbf{h}'_j)$，则不能排除由于引入 prompt 而带来的额外信息，如 position embedding 等等。为了避免我们需要将这部分因素消除。
