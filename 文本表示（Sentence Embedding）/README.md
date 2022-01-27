@@ -49,6 +49,8 @@ for Web Search using Clickthrough Data**  *Xiaodong He, Jianfeng Gao, Li Deng, A
 * **PromptBERT: Improving BERT Sentence Embeddings with Prompts**  *Ting Jiang, Shaohan Huang, Zihan Zhang, Deqing Wang, Fuzhen Zhuang, Furu Wei, Haizhen Huang, Liangjie Zhang, Qi Zhang*  [[pdf]](https://arxiv.org/pdf/2201.04337v1.pdf)  [[code]](https://github.com/kongds/prompt-bert)  -***Prompt-BERT***  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/PromptBERT)
 * **FairFil: Contrastive Neural Debiasing Method for Pretrained Text Encoders**  *Pengyu Cheng, Weituo Hao, Siyang Yuan, Shijing Si, Lawrence Carin*  (ICLR 2021)  [[ICLR pdf]](https://openreview.net/pdf?id=N6JECD-PI5w)  -***FairFil***
 * **DeCLUTR: Deep Contrastive Learning for Unsupervised Textual Representations**  *John Giorgi, Osvald Nitski, Bo wang, Gary Bader*  (ACL 2021)  [[ACL pdf]](https://aclanthology.org/2021.acl-long.72.pdf)  [[code]](https://github.com/JohnGiorgi/DeCLUTR)  -***DeCLUTR***
+* **SNCSE: Contrastive Learning for Unsupervised Sentence Embedding
+with Soft Negative Samples**  *Hao Wang, Yangguang Li, Zhen Huang, Yong Dou, Lingpeng Kong, Jing Shao*  (preprint)  [[pdf]](https://arxiv.org/pdf/2201.05979v2.pdf)  [[code]](https://github.com/sense-gvt/sncse)  -***SNCSE***
 
 ## Analysis
 * **Representation Degeneration Problem in Training Natural Language Generation Models**  *Jun Gao, Di He, Xu Tan, Tao Qin, Liwei Wang, Tie-Yan Liu*  (ICLR2019)  [[pdf]](https://arxiv.org/pdf/1907.12009.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Analysis/BERT%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7)
