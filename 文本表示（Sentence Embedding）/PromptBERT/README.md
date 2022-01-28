@@ -65,8 +65,6 @@ $$
 
 ## 三、结合 prompt 与对比学习
 &emsp;&emsp;我们的基本思路就是使用不同的 template 生成不同的 view。设两个 template 诱导出的句嵌为 $\mathbf{h}_i$ 与 $\mathbf{h}'_i$，如果只是取正例对为 $(\mathbf{h}_i,\mathbf{h}'_i)$，负例对为 $(\mathbf{h}_i,\mathbf{h}'_j)$，则不能排除由于引入 prompt 而带来的额外信息，如 position embedding 等等。为了避免我们需要将这部分因素消除。具体而言就是直接将 template 输入 bert 得到 $\hat{\mathbf{h}}_i$，再用 $\mathbf{h}_i-\hat{\mathbf{h}}_i$ 做为最终句嵌。  
-&emsp;&emsp;那么最终的对比学习训练目标：
-
-$$
+&emsp;&emsp;那么最终的对比学习训练目标：$$
 l_i=-\log\frac{e^{\cos(\mathbf{h}_i-\hat{\mathbf{h}}_i,\mathbf{h}'_i-\hat{\mathbf{h}}'_i)/\tau}}{\sum_{j}^N e^{\cos(\mathbf{h}_i-\hat{\mathbf{h}}_i,\mathbf{h}'_j-\hat{\mathbf{h}}'_j)/\tau}} 
 $$
