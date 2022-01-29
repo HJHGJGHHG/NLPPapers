@@ -35,7 +35,7 @@ def load_train_data_unsupervised(tokenizer, args):
     """
     logger.info('loading unsupervised train data')
     output_path = os.path.dirname(args.output_path)
-    train_file_cache = join(output_path, 'train-unsupervise.pkl')
+    train_file_cache = join(output_path, 'train-unsupervised.pkl')
     if os.path.exists(train_file_cache) and not args.overwrite_cache:
         with open(train_file_cache, 'rb') as f:
             feature_list = pickle.load(f)
