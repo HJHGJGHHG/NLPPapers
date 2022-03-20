@@ -37,3 +37,6 @@
 - **Attention-based LSTM for Aspect-level Sentiment Classification**. *Yequan Wang, Minlie Huang, Xiaoyan Zhu, Li Zhao*. (EMNLP 2016) [[paper]](https://aclweb.org/anthology/D16-1058) - ***ATAE-LSTM***  [[my code]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/ABSA/ABSA)
 - **Aspect Level Sentiment Classification with Deep Memory Network**. *Duyu Tang, Bing Qin, Ting Liu*. (EMNLP 2016) [[paper]](https://www.aclweb.org/anthology/D16-1021)[[code]](https://drive.google.com/drive/folders/1Hc886aivHmIzwlawapzbpRdTfPoTyi1U) - ***MemNet*** 	*TODO*
 - **Interactive Attention Networks for Aspect-Level Sentiment Classification**. *Dehong Ma, Sujian Li, Xiaodong Zhang, Houfeng Wang*. (IJCAI 2017) [[paper]](https://www.ijcai.org/proceedings/2017/0568.pdf) - ***IAN***
+
+## 三、After BERT: based on PLMs
+- **SKEP: Sentiment Knowledge Enhanced Pre-training for Sentiment Analysis**  *Hao Tian, Can Gao, Xinyan Xiao, Hao liu, Bolei He, Hua Wu, Haifeng Wang, Feng Wu*  (ACL 2020)  [[ACL pdf]](https://aclanthology.org/2020.acl-main.374.pdf)  [[notes]]()
