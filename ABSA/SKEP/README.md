@@ -28,4 +28,6 @@ $$
 WP(x)=\sum_{y=+}PMI(x,y)-\sum_{y=-}PMI(x,y)
 $$
 &emsp;&emsp;给定一阈值 $\pm WP_0$，若 $WP(x)>+WP_0$，则 x 为正极性词；若 $WP(x)<-WP_0$，则 x 为负极性词。  
-&emsp;&emsp;得到极性词后，将其与***最近的名词（3个 token 以内）***组合成为方面词-情感词对。
+&emsp;&emsp;得到极性词后，将其与***最近的名词（3个 token 以内）***组合成为方面词-情感词对。由此，我们得到了情感知识库 $\mathcal{G}={(<aspect-sentiment>,polarity)}$  
+
+### 3.Sentiment Masking
