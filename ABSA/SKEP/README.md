@@ -28,6 +28,19 @@ $$
 WP(x)=\sum_{y=+}PMI(x,y)-\sum_{y=-}PMI(x,y)
 $$
 &emsp;&emsp;给定一阈值 $\pm WP_0$，若 $WP(x)>+WP_0$，则 x 为正极性词；若 $WP(x)<-WP_0$，则 x 为负极性词。  
-&emsp;&emsp;得到极性词后，将其与***最近的名词（3个 token 以内）***组合成为方面词-情感词对。由此，我们得到了情感知识库 $\mathcal{G}={(<aspect-sentiment>,polarity)}$  
+&emsp;&emsp;得到极性词后，将其与***最近的名词（3个 token 以内）***组合成为方面词-情感词对。由此，我们得到了情感知识库 $\mathcal{G}={(aspect-sentiment,polarity)}$。总体流程如下：
+<center><img src="3.png"  style="zoom:100%;" width="110%"/></center>
+
 
 ### 3.Sentiment Masking
+* a.最多取两对方面词-情感词 mask 掉；
+* b.随机选择剩余未屏蔽的情感词，最多10%，mask 掉；
+* c.如果步骤2中 mask 掉的 token 不足，即少于 10%，则随机选择 token 作常规 mask。（保证 b c 两步加起来恒有 10% 的 token 被 mask 掉）
+
+### 4.Sentiment Pre-training Objectives
+&emsp;&emsp;多目标训练：Sentiment Word (SW)，Word Polarity (WP)，Aspect-sentiment Pair (AP)，总损失函数：  
+$$
+L=L_{sw}+L_{wp}+L_{ap}
+$$
+##### (a) SW：Sentiment Word Prediction 
+&emsp;&emsp;
