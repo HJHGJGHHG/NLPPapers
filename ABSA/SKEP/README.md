@@ -42,5 +42,11 @@ $$
 $$
 L=L_{sw}+L_{wp}+L_{ap}
 $$
-##### (a) SW：Sentiment Word Prediction 
-&emsp;&emsp;
+##### (a) SW：Sentiment Word Prediction （学习情感词）
+&emsp;&emsp;将 mask 的情感词还原，注意如果情感词是作为方面词-情感词对 mask 掉的，则该 token 不用 sw 损失。  
+
+##### (b) WP：Word Polarity Prediction （学习情感词极性）
+&emsp;&emsp;对每个 mask 掉的情感词，预测其极性。  
+
+##### (c) AP：Aspect-sentiment Pair Prediction （学习方面词与情感词之间的联系）
+&emsp;&emsp;将 $\mathcal{G}$ 中的**方面词-情感词对作为一个 token**！用 [CLS] 学习出来。  
