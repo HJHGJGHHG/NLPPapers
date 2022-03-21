@@ -39,4 +39,4 @@
 - **Interactive Attention Networks for Aspect-Level Sentiment Classification**. *Dehong Ma, Sujian Li, Xiaodong Zhang, Houfeng Wang*. (IJCAI 2017) [[paper]](https://www.ijcai.org/proceedings/2017/0568.pdf) - ***IAN***
 
 ## 三、After BERT: based on PLMs
-- **SKEP: Sentiment Knowledge Enhanced Pre-training for Sentiment Analysis**  *Hao Tian, Can Gao, Xinyan Xiao, Hao liu, Bolei He, Hua Wu, Haifeng Wang, Feng Wu*  (ACL 2020)  [[ACL pdf]](https://aclanthology.org/2020.acl-main.374.pdf)  [[notes]]()
+- **SKEP: Sentiment Knowledge Enhanced Pre-training for Sentiment Analysis**  *Hao Tian, Can Gao, Xinyan Xiao, Hao liu, Bolei He, Hua Wu, Haifeng Wang, Feng Wu*  (ACL 2020)  [[ACL pdf]](https://aclanthology.org/2020.acl-main.374.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/ABSA/SKEP) - ***SKEP***
