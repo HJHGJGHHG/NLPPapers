@@ -22,7 +22,7 @@ $$
 $$
 Attention(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V})_i = \frac{\sum\limits_{j=1}^n sim(\boldsymbol{q}_i, \boldsymbol{k}_j)\boldsymbol{v}_j}{\sum\limits_{j=1}^n sim(\boldsymbol{q}_i, \boldsymbol{k}_j)}
 $$
-&emsp;&emsp;但是为了保留相似的分布特性，必须保证 $sim(\cdot,\cdot)\geq 0$。  
+&emsp;&emsp;但是为了保留相似的分布特性，必须保证 $sim(\cdot,\cdot)\geq 0$，而且需要尽量保证 $sim()$ 是 $e^x$ 的无偏估计。  
 
 ### 2. Kernel method
 &emsp;&emsp;直接构造二元非负函数可能不太容易，我们可以转换另一个思路：如果对 $\boldsymbol{q}_i,\boldsymbol{k}_j$ 做一个非负变换，则他们的内积自然非负。我们有：  
@@ -42,7 +42,7 @@ $$
 $$
 \phi(x)=\varphi(x)=1 + elu(x) = \left\{\begin{aligned}1 + x,\, x \geq 0\\ e^x,\, x < 0\end{aligned}\right.
 $$
-&emsp;&emsp;而 [Rethinking Attention with Performers](https://arxiv.org/pdf/2009.14794.pdf) 找到了 $\phi,\varphi:\mathbb{R}^d \to\mathbb{R}^m$ 使得：$e^{\boldsymbol{q}\cdot \boldsymbol{k}}\approx \tilde{\boldsymbol{q}}\cdot\tilde{\boldsymbol{k}}=\phi(\boldsymbol{q})\cdot\varphi{(\boldsymbol{k})}$：  
+&emsp;&emsp;显然这是基于泰勒展开的结果。而 [Rethinking Attention with Performers](https://arxiv.org/pdf/2009.14794.pdf) 找到了 $\phi,\varphi:\mathbb{R}^d \to\mathbb{R}^m$ 使得：$e^{\boldsymbol{q}\cdot \boldsymbol{k}}\approx \tilde{\boldsymbol{q}}\cdot\tilde{\boldsymbol{k}}=\phi(\boldsymbol{q})\cdot\varphi{(\boldsymbol{k})}$：  
 $$
 \begin{equation}\begin{aligned} 
 e^{\boldsymbol{q}\cdot \boldsymbol{k}}&=\mathbb{E}_{\boldsymbol{\omega}\sim \mathcal{N}(\boldsymbol{\omega};0,\boldsymbol{1}_d)}\left[e^{\boldsymbol{\omega}\cdot \boldsymbol{q}-\Vert \boldsymbol{q}\Vert^2 / 2} \times e^{\boldsymbol{\omega}\cdot \boldsymbol{k}-\Vert \boldsymbol{k}\Vert^2 / 2}\right]\\[6pt] 
@@ -56,3 +56,10 @@ e^{\boldsymbol{\omega}_2\cdot \boldsymbol{k}-\Vert \boldsymbol{k}\Vert^2 / 2}\\
 e^{\boldsymbol{\omega}_m\cdot \boldsymbol{k}-\Vert \boldsymbol{k}\Vert^2 / 2} \end{pmatrix}}_{\tilde{\boldsymbol{k}}} 
 \end{aligned}\end{equation}
 $$
+&emsp;&emsp;论文 [《Random Feature Attention》](https://arxiv.org/pdf/2103.02143.pdf) 给出了另外一种思路：考虑 $\phi:\mathbb{R}^d\to\mathbb{R}^{2D},\boldsymbol{w_i}\overset{\underset{i.i.d}{}}{\sim} \mathcal{N}(\boldsymbol{w};0,\sigma^2 \mathbf{I}_d)$，其中$\phi(\boldsymbol{x})=\sqrt{\frac{1}{D}}\cdot \left[sin(\boldsymbol{w_1}\cdot\boldsymbol{x}),\cdots,sin(\boldsymbol{w_D}\cdot\boldsymbol{x}),cos(\boldsymbol{w_1}\cdot\boldsymbol{x})\cdots,cos(\boldsymbol{w_D}\cdot\boldsymbol{x})\right]$。  
+&emsp;&emsp;则我们有：  
+$$
+e^{\frac{\boldsymbol{q}\cdot\boldsymbol{k}}{\sigma^2}}\approx e^{\frac{\Vert{\boldsymbol{q}\Vert^2}+\Vert{\boldsymbol{k}\Vert^2}}{2\sigma^2}}\cdot \phi(\boldsymbol{q})\cdot\phi(\boldsymbol{k})
+$$
+&emsp;&emsp;核方法小结：通过构造核函数近似 softmax，再根据矩阵乘法结合律降低复杂度。  
+### 3. 低秩分解
