@@ -61,5 +61,6 @@ $$
 $$
 e^{\frac{\boldsymbol{q}\cdot\boldsymbol{k}}{\sigma^2}}\approx e^{\frac{\Vert{\boldsymbol{q}\Vert^2}+\Vert{\boldsymbol{k}\Vert^2}}{2\sigma^2}}\cdot \phi(\boldsymbol{q})\cdot\phi(\boldsymbol{k})
 $$
-&emsp;&emsp;核方法小结：通过构造核函数近似 softmax，再根据矩阵乘法结合律降低复杂度。  
+&emsp;&emsp;核方法小结：通过构造核函数近似 softmax，再根据矩阵乘法结合律降低复杂度。但是构造困难，而且引入随机性，强迫症不友好，复现困难..（好像都没被 transformers 库收录）  
+
 ### 3. 低秩分解
