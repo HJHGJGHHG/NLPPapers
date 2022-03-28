@@ -61,6 +61,23 @@ $$
 $$
 e^{\frac{\boldsymbol{q}\cdot\boldsymbol{k}}{\sigma^2}}\approx e^{\frac{\Vert{\boldsymbol{q}\Vert^2}+\Vert{\boldsymbol{k}\Vert^2}}{2\sigma^2}}\cdot \phi(\boldsymbol{q})\cdot\phi(\boldsymbol{k})
 $$
-&emsp;&emsp;核方法小结：通过构造核函数近似 softmax，再根据矩阵乘法结合律降低复杂度。但是构造困难，而且引入随机性，强迫症不友好，复现困难..（好像都没被 transformers 库收录）  
+&emsp;&emsp;核方法小结：通过构造核函数近似 softmax，再根据矩阵乘法结合律降低复杂度。但是构造困难，而且如何量化核函数与原始attention的差距？  
 
 ### 3. 低秩分解
+&emsp;&emsp;[《Linformer: Self-Attention with Linear Complexity》](https://arxiv.org/pdf/2006.04768.pdf) 指出 $softmax(\boldsymbol{Q}\boldsymbol{K}^T)$ 是低秩矩阵，所以一个很自然的想法是矩阵分解。Linformer 的思路是：两个m×n 的矩阵 $\boldsymbol{E},\boldsymbol{F}\in\mathbb{R}^{k\times n}$ 分别对 $\boldsymbol{K},\boldsymbol{V}$ 进行投影：  
+$$
+\begin{equation}Attention(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = softmax\left(\boldsymbol{Q}(\boldsymbol{E}\boldsymbol{K})^{\top}\right)\boldsymbol{F}\boldsymbol{V}\end{equation}
+$$
+&emsp;&emsp;这样理论复杂度是 $O(n)$，（k 为较小的常数），但是事实上为了性能 k 应该不能太小（）。（吐槽：linformer 只是加了个映射，相当于对前面的 $n \times n$ 自注意力矩阵进行 pooling 到 $n \times k$..）
+
+### 4. 线性化总结
+##### 4.1 适用场景
+&emsp;&emsp;我们在什么时候需要将 SA 线性化呢？苏神给出了相当精彩的推导：https://spaces.ac.cn/archives/8610 。核心观点就是 <font color=	#DC143C size=4 >理论上对于base版来说，当序列长度不超过1536时，Transformer的复杂度都是近乎线性的；当序列长度超过1536时，Transformer的计算量逐渐以Attention为主，复杂度慢慢趋于二次方，直到长度超过4608，才真正以二次项为主</font>。实际论文中很多实验也是在成千上万的序列长度下比较的..所以同样大的模型通过修改Attention来提升效率可能是走不通的。。。
+
+##### 4.2 线性化的局限：低秩性
+&emsp;&emsp;linformer 提到了注意力矩阵的低秩性，但是虽然多头会带来低秩性（）softmax 可能增加秩（），所以标准 attention 虽然有低秩性的问题，但是实际效果还不错。  
+&emsp;&emsp;而不论是核方法还是低秩分解，中间维度（？）不能太小，这就导致处理短序列的时候，线性 Attention 还比标准 Attention 要慢
+
+##### 4.3 优势？
+
+##### 4.4 未来？
