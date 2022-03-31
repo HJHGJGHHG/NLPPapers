@@ -15,3 +15,4 @@
 * **Synthesizer: Rethinking Self-Attention in Transformer Models**.  *Yi Tay, Dara Bahri, Donald Metzler, Da-Cheng Juan, Zhe Zhao, Che Zheng.*  (ICML 2021)  [[pdf]](https://arxiv.org/pdf/2005.00743.pdf)  -***Synthesizer***
 * **Linformer: Self-Attention with Linear Complexity**.  *Sinong Wang, Belinda Z. Li, Madian Khabsa, Han Fang, Hao Ma*.  [[ICLR pdf]](https://openreview.net/pdf?id=Bl8CQrx2Up4)  -***Linformer***
 ## Sparse Attention (attention matrix)
+* **Generating Long Sequences with Sparse Transformers**.  *Rewon Child, Scott Gray, Alec Radford, Ilya Sutskever*.  [[pdf]](https://paperswithcode.com/paper/190410509)  -***Sparse Transformer***
