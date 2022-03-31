@@ -22,7 +22,7 @@ $$
 $$
 Attention(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V})_i = \frac{\sum\limits_{j=1}^n sim(\boldsymbol{q}_i, \boldsymbol{k}_j)\boldsymbol{v}_j}{\sum\limits_{j=1}^n sim(\boldsymbol{q}_i, \boldsymbol{k}_j)}
 $$
-&emsp;&emsp;但是为了保留相似的分布特性，必须保证 $sim(\cdot,\cdot)\geq 0$，而且需要尽量保证 $sim()$ 是 $e^x$ 的无偏估计。  
+&emsp;&emsp;但是为了保留相似的分布特性，必须保证 $sim(\cdot,\cdot)\geq 0$，而且一个很自然的想法是构造 $sim()$ 使其是 $e^x$ 的无偏估计。  
 
 ### 2. Kernel method
 &emsp;&emsp;直接构造二元非负函数可能不太容易，我们可以转换另一个思路：如果对 $\boldsymbol{q}_i,\boldsymbol{k}_j$ 做一个非负变换，则他们的内积自然非负。我们有：  
@@ -71,6 +71,9 @@ $$
 &emsp;&emsp;这样理论复杂度是 $O(n)$，（k 为较小的常数），但是事实上为了性能 k 应该不能太小（）。（吐槽：linformer 只是加了个映射，相当于对前面的 $n \times n$ 自注意力矩阵进行 pooling 到 $n \times k$..）
 
 ### 4. 线性化总结
+##### 4.0 线性化的本质：优化 softmax
+&emsp;&emsp;
+
 ##### 4.1 适用场景
 &emsp;&emsp;我们在什么时候需要将 SA 线性化呢？苏神给出了相当精彩的推导：https://spaces.ac.cn/archives/8610 。核心观点就是 <font color=	#DC143C size=4 >理论上对于base版来说，当序列长度不超过1536时，Transformer的复杂度都是近乎线性的；当序列长度超过1536时，Transformer的计算量逐渐以Attention为主，复杂度慢慢趋于二次方，直到长度超过4608，才真正以二次项为主</font>。实际论文中很多实验也是在成千上万的序列长度下比较的..所以同样大的模型通过修改Attention来提升效率可能是走不通的。。。
 
@@ -81,3 +84,5 @@ $$
 ##### 4.3 优势？
 
 ##### 4.4 未来？
+
+## 二、稀疏化
