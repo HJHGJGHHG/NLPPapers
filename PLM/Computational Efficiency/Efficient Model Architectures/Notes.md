@@ -93,4 +93,40 @@ $$
 ##### 4.4 未来？
 
 ## 二、稀疏化：减少信息以提升性能
-sparse transformer, longformer, transformer-xl, bigbird, reformer
+&emsp;&emsp;我们说Self Attention是 $O(n2)$ 的，那是因为它要对序列中的任意两个向量都要计算相关度，得到一个 $n^2$ 大小的相关度矩阵。  
+<center><img src="img/1.png"  style="zoom:100%;" width="110%"/></center>
+&emsp;&emsp;所以，如果要节省显存，加快计算速度，那么一个基本的思路就是减少关联性的计算，也就是认为每个元素只跟序列内的一部分元素相关，这就是稀疏化的基本原理。  
+### 0. 写在稀疏化之前
+&emsp;&emsp;但是很明显，稀疏化有两个不足之处：  
+1、如何选择要保留的注意力区域，这是人工主观决定的，（讲故事）；  
+2、它需要从编程上进行特定的设计优化，才能得到一个高效的实现，所以它不容易推广。  
+
+### 1. 几种矩阵稀疏化方案
+##### 1.1 Atrous/Dilated Self Attention
+&emsp;&emsp;强行要求每个元素只跟它相对距离为 $k,2k,3k,…$ 的元素关联，其中 $k>1$ 是预先设定的超参。  
+<center><img src="img/2.png"  style="zoom:100%;" width="110%"/></center>
+
+##### 1.2 Local Self Attention
+&emsp;&emsp;约束每个元素只与前后 $k$ 个元素以及自身有关联。  
+<center><img src="img/3.png"  style="zoom:100%;" width="110%"/></center>
+
+##### 1.3 Global Self Attention
+&emsp;&emsp;选择一些位置计算它们与所有元素的关联。  
+<center><img src="img/4.png"  style="zoom:100%;" width="110%"/></center>
+
+##### 1.4 Random Self Attention
+<center><img src="img/5.png"  style="zoom:100%;" width="110%"/></center>
+
+### 2. 稀疏化方法的几篇经典论文
+&emsp;&emsp;只关注算法原理，没有关注具体实现...
+##### 2.1 [Sparse Transformer](https://paperswithcode.com/paper/190410509)
+&emsp;&emsp;OpenAI 的 Sparse Self Attention 即是 Dilated Self Attention + Local Self Attention。考虑到模型是多层的，如果将二者交替使用，理论上也可以学习到全局关联性，也省了显存。  
+&emsp;&emsp;但是 OpenAI 却没有这么做，直接将二者合二为一了：  
+
+<center><img src="img/6.png"  style="zoom:100%;" width="110%"/></center>
+
+&emsp;&emsp;局部紧密相关和远程稀疏相关，一个不错的先验。  
+##### 2.2 [Longformer](https://arxiv.org/pdf/2004.05150v2.pdf)
+&emsp;&emsp;Local + Global
+##### 2.3 [BigBird](https://proceedings.neurips.cc//paper/2020/file/c8512d142a2d849725f31a9a7a361ab9-Paper.pdf)
+&emsp;&emsp;Local + Global + Random
