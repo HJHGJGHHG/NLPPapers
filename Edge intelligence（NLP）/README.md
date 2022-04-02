@@ -13,4 +13,6 @@ Reduce the computational complexity of the transformer-based model.
 
 ## 2. Model Compression
 Making the model lightweight.  
-##### 2.1 Knowledge Distillation
+##### 2.0 Overview
+* **Compression of Deep Learning Models for Text: A Survey**.  *Manish Gupta, Puneet Agrawal*.  (ACM TKDD 2021)  [pdf](https://arxiv.org/pdf/2008.05221.pdf)
+##### 2.1 [Knowledge Distillation](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation)
