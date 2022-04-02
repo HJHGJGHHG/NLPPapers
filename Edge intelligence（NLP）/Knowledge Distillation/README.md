@@ -4,7 +4,7 @@
 ## Overview
 * **Knowledge Distillation: A Survey**.  *Jianping Gou, Baosheng Yu, Stephen John Maybank, Dacheng Tao*.  (Int. J. Comput. Vis. 2021)
 ## Papers
-* **Distilling the Knowledge in a Neural Network**.  *Geoffrey Hinton, Oriol Vinyals, Jeff Dean*.  (NIPS 2014)  [[pdf]](https://arxiv.org/pdf/1503.02531v1.pdf)
+* **Distilling the Knowledge in a Neural Network**.  *Geoffrey Hinton, Oriol Vinyals, Jeff Dean*.  (NIPS 2014)  [[pdf]](https://arxiv.org/pdf/1503.02531v1.pdf)  [[notes]]()
 
 ## Applications
 
