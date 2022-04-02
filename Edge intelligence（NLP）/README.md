@@ -5,8 +5,12 @@ Running neural networks on resource-constrained devices requires joint solutions
 
 <center><img src="1.png"  style="zoom:100%;" width="110%"/></center>
 
-## Surveys & Overview
+## 0. Surveys & Overview
 * **Bringing AI To Edge: From Deep Learning's Perspective**  *Di Liu, Hao Kong, Xiangzhong Luo, Weichen Liu, Ravi Subramaniam*  [[pdf]](https://arxiv.org/pdf/2011.14808.pdf)
 
-## [Efficient Model Architectures](https://github.com/HJHGJGHHG/NLPPapers/tree/main/PLM/Computational%20Efficiency/Efficient%20Model%20Architectures)
-Reduce the computational complexity of transformer. TODO  
+## [1. Efficient Model Architectures](https://github.com/HJHGJGHHG/NLPPapers/tree/main/PLM/Computational%20Efficiency/Efficient%20Model%20Architectures)
+Reduce the computational complexity of the transformer-based model.   
+
+## 2. Model Compression
+Making the model lightweight.  
+##### 2.1 Knowledge Distillation
