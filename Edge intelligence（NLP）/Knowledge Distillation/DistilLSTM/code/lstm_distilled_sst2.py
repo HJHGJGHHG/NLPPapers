@@ -1,0 +1,292 @@
+import datetime
+import random
+import time
+import logging
+import numpy as np
+import torch
+import torch.utils.data
+import utils
+import torch.nn.functional as F
+from datasets import load_dataset, load_metric
+from torch import nn
+from transformers import AdamW, BertTokenizer, DataCollatorWithPadding, get_scheduler
+
+from models import LSTM_SST2, Bert_SST2
+
+logger = logging.getLogger(__name__)
+logger.setLevel(level=logging.INFO)
+handler = logging.FileHandler("lstm_distilled_sst2_log.txt")
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+task_to_keys = {
+    "cola": ("sentence", None),
+    "mnli": ("premise", "hypothesis"),
+    "mrpc": ("sentence1", "sentence2"),
+    "qnli": ("question", "sentence"),
+    "qqp": ("question1", "question2"),
+    "rte": ("sentence1", "sentence2"),
+    "sst2": ("sentence", None),
+    "stsb": ("sentence1", "sentence2"),
+    "wnli": ("sentence1", "sentence2"),
+}
+
+
+def evaluate(model, criterion, data_loader, device, metric, logger, print_freq=100):
+    model.eval()
+    metric_logger = utils.MetricLogger(logger=logger, delimiter="  ")
+    header = "Test:"
+    with torch.no_grad():
+        for batch in metric_logger.log_every(data_loader, print_freq, header):
+            batch.to(device)
+            labels = batch.pop("labels")
+            outputs = model(batch['input_ids'])
+            loss = criterion(outputs[0].reshape(-1, 2), labels.reshape(-1))
+            metric_logger.update(loss=loss.item())
+            metric.add_batch(
+                predictions=outputs[0].argmax(dim=-1),
+                references=labels, )
+    acc_global_avg = metric.compute()["accuracy"]
+    # gather the stats from all processes
+    metric_logger.synchronize_between_processes()
+    print(" * Accuracy {acc_global_avg:.10f}".format(
+        acc_global_avg=acc_global_avg))
+    logger.info(" * Accuracy {acc_global_avg:.10f}".format(
+        acc_global_avg=acc_global_avg))
+    return acc_global_avg
+
+
+def set_seed(seed=1234):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+def load_data(args, tokenizer):
+    print("Loading data")
+    raw_datasets = load_dataset(
+        "glue.py", args.task_name, cache_dir=args.data_cache_dir)
+    sentence1_key, sentence2_key = task_to_keys[args.task_name]
+    
+    def preprocess_function(examples):
+        texts = ((examples[sentence1_key],) if sentence2_key is None else
+                 (examples[sentence1_key], examples[sentence2_key]))
+        result = tokenizer(
+            *texts, padding=False, max_length=args.max_length, truncation=True)
+        
+        if "label" in examples:
+            result["labels"] = examples["label"]
+        return result
+    
+    train_ds = raw_datasets["train"].map(
+        preprocess_function,
+        batched=True,
+        remove_columns=raw_datasets["train"].column_names,
+        desc="Running tokenizer on train dataset",
+        new_fingerprint=f"train_tokenized_dataset_{args.task_name}", )
+    validation_ds = raw_datasets["validation"].map(
+        preprocess_function,
+        batched=True,
+        remove_columns=raw_datasets["validation"].column_names,
+        desc="Running tokenizer on validation dataset",
+        new_fingerprint=f"validation_tokenized_dataset_{args.task_name}", )
+    train_sampler = torch.utils.data.SequentialSampler(train_ds)
+    validation_sampler = torch.utils.data.SequentialSampler(validation_ds)
+    
+    return train_ds, validation_ds, train_sampler, validation_sampler
+
+
+def main(args):
+    if args.output_dir:
+        utils.mkdir(args.output_dir)
+    print(args)
+    scaler = None
+    if args.fp16:
+        scaler = torch.cuda.amp.GradScaler()
+    device = torch.device(args.device)
+    torch.backends.cudnn.benchmark = True
+    
+    if args.seed is not None:
+        set_seed(args.seed)
+    
+    tokenizer = BertTokenizer.from_pretrained(args.model_name_or_path)
+    data_collator = DataCollatorWithPadding(
+        tokenizer, pad_to_multiple_of=(8 if args.fp16 else None))
+    train_dataset, validation_dataset, train_sampler, validation_sampler = load_data(
+        args, tokenizer)
+    train_data_loader = torch.utils.data.DataLoader(
+        train_dataset,
+        batch_size=args.batch_size,
+        sampler=train_sampler,
+        num_workers=args.workers,
+        collate_fn=data_collator, )
+    
+    validation_data_loader = torch.utils.data.DataLoader(
+        validation_dataset,
+        batch_size=args.batch_size,
+        sampler=validation_sampler,
+        num_workers=args.workers,
+        collate_fn=data_collator, )
+    
+    print("Creating model")
+    model1 = Bert_SST2.from_pretrained(args.model_name_or_path, num_labels=2)
+    model1.to(device)
+    model2 = LSTM_SST2(
+        input_dim=len(tokenizer),
+        embedding_dim=512,
+        hidden_dim=768,
+        output_dim=2,
+        n_layers=1,
+        bidirectional=True,
+        dropout=0.5,
+        batch_size=args.batch_size
+    )
+    model2.to(device)
+    
+    print("Creating criterion")
+    ce = nn.CrossEntropyLoss()
+    mse = nn.MSELoss()
+    kl = nn.KLDivLoss()
+    alpha = 0.5
+    
+    print("Creating optimizer")
+    # Split weights in two groups, one with weight decay and the other not.
+    no_decay = ["bias", "LayerNorm.weight"]
+    optimizer_grouped_parameters = [
+        {"params": [p for n, p in model2.named_parameters()
+                    if not any(nd in n for nd in no_decay)],
+         "weight_decay": args.weight_decay,
+         },
+        {"params": [p for n, p in model2.named_parameters()
+                    if any(nd in n for nd in no_decay)],
+         "weight_decay": 0.0,
+         },
+    ]
+    optimizer = AdamW(optimizer_grouped_parameters,
+                      lr=args.lr,
+                      betas=(0.9, 0.999),
+                      eps=1e-6
+                      )
+    
+    print("Creating lr_scheduler")
+    lr_scheduler = get_scheduler(
+        name=args.lr_scheduler_type,
+        optimizer=optimizer,
+        num_warmup_steps=args.num_warmup_steps,
+        num_training_steps=args.num_train_epochs * len(train_data_loader), )
+    
+    metric = load_metric("metric.py")
+    if args.test_only:
+        evaluate(model2, ce, validation_data_loader, logger=logger, device=device, metric=metric)
+        return
+    
+    print("Start training")
+    start_time = time.time()
+    losses = []
+    for epoch in range(args.num_train_epochs):
+        model2.train()
+        metric_logger = utils.MetricLogger(logger=logger, delimiter="  ")
+        metric_logger.add_meter(
+            "lr", utils.SmoothedValue(
+                window_size=1, fmt="{value}"))
+        metric_logger.add_meter(
+            "sentence/s", utils.SmoothedValue(
+                window_size=10, fmt="{value}"))
+        
+        header = "Epoch: [{}]".format(epoch)
+        i = 0
+        for batch in metric_logger.log_every(train_data_loader, args.print_freq, header):
+            start_time = time.time()
+            batch.to(device)
+            labels = batch.pop("labels")
+            with torch.no_grad():
+                bert_outputs = model1(**batch)
+                bert_softmax = F.softmax(bert_outputs[0]/args.T, dim=1)
+            with torch.cuda.amp.autocast(enabled=scaler is not None):
+                lstm_outputs = model2(batch['input_ids'])
+                lstm_softmax = F.softmax(lstm_outputs[0]/args.T, dim=1)
+                # loss = ce(lstm_outputs[0].reshape(-1, 2), labels.reshape(-1))*alpha + (1-alpha)*mse(bert_outputs[0], lstm_outputs[0])
+                loss = ce(lstm_outputs[0].reshape(-1, 2), labels.reshape(-1))*alpha + (1-alpha)*args.T*args.T*ce(lstm_softmax, bert_softmax)
+                # loss = ce(lstm_outputs[0].reshape(-1, 2), labels.reshape(-1))*alpha + (1-alpha)*args.T*args.T*kl(lstm_softmax, bert_softmax)
+                
+            optimizer.zero_grad()
+            if scaler is not None:
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
+            else:
+                loss.backward()
+                optimizer.step()
+            losses.append(loss.item())
+            lr_scheduler.step()
+            batch_size = batch["input_ids"].shape[0]
+            metric_logger.update(
+                loss=loss.item(), lr=lr_scheduler.get_last_lr()[-1])
+            metric_logger.meters["sentence/s"].update(batch_size /
+                                                      (time.time() - start_time))
+    acc = evaluate(
+        model2,
+        ce,
+        validation_data_loader,
+        logger=logger,
+        device=device,
+        metric=metric)
+    if args.output_dir:
+        model2.save_pretrained(args.output_dir)
+    
+    total_time = time.time() - start_time
+    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    print("Training time {}".format(total_time_str))
+    return acc, losses
+
+
+def get_args_parser(add_help=True):
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="PyTorch SST2 Classification Training", add_help=add_help)
+    parser.add_argument("--T", default=10, type=int)
+    parser.add_argument(
+        "--data_cache_dir", default=None, help="data cache dir.")
+    parser.add_argument("--task_name", default="sst2",
+                        help="the name of the glue task to train on.")
+    parser.add_argument("--model_name_or_path", default="/root/autodl-tmp/DistilLSTM/bert_sst2",
+                        help="path to pretrained model or model identifier from huggingface.co/models.")
+    parser.add_argument("--device", default="cuda", help="device")
+    parser.add_argument("--batch_size", default=128, type=int)
+    parser.add_argument("--max_length", type=int, default=128,
+                        help="The maximum total input sequence length after tokenization. Sequences longer than this will be truncated,")
+    parser.add_argument("--num_train_epochs", default=20, type=int,
+                        help="number of total epochs to run")
+    parser.add_argument("--workers", default=0, type=int,
+                        help="number of data loading workers (default: 0)", )
+    parser.add_argument("--lr", default=1e-3, type=float, help="initial learning rate")
+    parser.add_argument("--weight_decay", default=1e-2, type=float,
+                        help="weight decay (default: 1e-2)", dest="weight_decay", )
+    parser.add_argument("--lr_scheduler_type", default="linear", help="the scheduler type to use.",
+                        choices=[
+                            "linear",
+                            "cosine",
+                            "cosine_with_restarts",
+                            "polynomial",
+                            "constant",
+                            "constant_with_warmup",
+                        ], )
+    parser.add_argument("--num_warmup_steps", default=0, type=int,
+                        help="number of steps for the warmup in the lr scheduler.", )
+    parser.add_argument("--print_freq", default=20, type=int, help="print frequency")
+    parser.add_argument("--output_dir", default=None, help="path where to save")
+    parser.add_argument("--test_only", help="only test the model", action="store_true", )
+    parser.add_argument("--seed", default=1234, type=int, help="a seed for reproducible training.")
+    # Mixed precision training parameters
+    parser.add_argument("--fp16", action="store_true", help="whether or not mixed precision training")
+    
+    return parser
+
+
+if __name__ == "__main__":
+    args = get_args_parser().parse_args()
+    acc, losses = main(args)
+    print(acc)
