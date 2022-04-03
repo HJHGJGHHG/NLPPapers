@@ -5,7 +5,9 @@
 * **Knowledge Distillation: A Survey**.  *Jianping Gou, Baosheng Yu, Stephen John Maybank, Dacheng Tao*.  (Int. J. Comput. Vis. 2021)
 ## Papers
 * **Distilling the Knowledge in a Neural Network**.  *Geoffrey Hinton, Oriol Vinyals, Jeff Dean*.  (NIPS 2014)  [[pdf]](https://arxiv.org/pdf/1503.02531v1.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/Distilling%20the%20Knowledge%20in%20a%20Neural%20Network)
-* **Distilling Task-Specific Knowledge from BERT into Simple Neural Networks**.  *Raphael Tang, Yao Lu, Linqing Liu, Lili Mou, Olga Vechtomova, Jimmy Lin*.  [[pdf]](https://arxiv.org/pdf/1903.12136v1.pdf)  [[notes]]()  -***DistilLSTM***
+* **Distilling Task-Specific Knowledge from BERT into Simple Neural Networks**.  *Raphael Tang, Yao Lu, Linqing Liu, Lili Mou, Olga Vechtomova, Jimmy Lin*.  [[pdf]](https://arxiv.org/pdf/1903.12136v1.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/DistilLSTM)  -***DistilLSTM***  [[my code]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/DistilLSTM/code)
+* **DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter**.  *Victor Sanh, Lysandre Debut, Julien Chaumond, Thomas Wolf*.  (NeurIPS 2019)  [[pdf]](https://arxiv.org/pdf/1910.01108v4.pdf)  [[notes]]()  -***DistilBERT***
+* **Patient Knowledge Distillation for BERT Model Compression**.  *Siqi Sun, Yu Cheng, Zhe Gan, Jingjing Liu*.  (EMNLP 2019)  [[pdf]](https://arxiv.org/pdf/1908.09355.pdf)  [[notes]]()  -***BERT-PKD***
 
 ## Applications
 
