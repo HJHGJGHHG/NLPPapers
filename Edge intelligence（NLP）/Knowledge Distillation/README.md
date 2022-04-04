@@ -9,6 +9,7 @@
 * **DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter**.  *Victor Sanh, Lysandre Debut, Julien Chaumond, Thomas Wolf*.  (NeurIPS 2019)  [[pdf]](https://arxiv.org/pdf/1910.01108v4.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/DistilBERT)  -***DistilBERT***
 * **Patient Knowledge Distillation for BERT Model Compression**.  *Siqi Sun, Yu Cheng, Zhe Gan, Jingjing Liu*.  (EMNLP 2019)  [[pdf]](https://arxiv.org/pdf/1908.09355.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/BERT-PKD)  -***BERT-PKD***
 * **TinyBERT: Distilling BERT for Natural Language Understanding**.  *Xiaoqi Jiao, Yichun Yin, Lifeng Shang, Xin Jiang, Xiao Chen, Linlin Li, Fang Wang, Qun Liu*.  (ACL Findings 2020)  [[Findings pdf]](https://aclanthology.org/2020.findings-emnlp.372.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/TinyBERT)  -***TinyBERT***
+* **MobileBERT: a Compact Task-Agnostic BERT for Resource-Limited Devices**.  *Zhiqing Sun, Hongkun Yu, Xiaodan Song, Renjie Liu, Yiming Yang, Denny Zhou*.  (ACL 2020)  [[ACL pdf]](https://aclanthology.org/2020.acl-main.195.pdf)  [[notes]]()  -***MobileBERT***
 
 ## Applications
 
