@@ -14,6 +14,10 @@
 <center><img src="1.png"  style="zoom:100%;" width="110%"/></center>
 
 &emsp;&emsp;而直接训练 MobileBERT(c) 比较困难，所以先训练一个 IB-BERT(b) 而后再蒸馏。回过头来看 Inverted-Bottleneck，这样“宽进宽出中间窄”的设计很明显可以让 teacher 和 student 的 block 对齐，思路非常自然。  
+&emsp;&emsp;为什么不从 BERT(a) 直接蒸馏到 MobileBERT(c)？我们看下面的图：  
+<center><img src="10.png"  style="zoom:100%;" width="110%"/></center>
+
+&emsp;&emsp;我们会发现在 Embedding 层，MobileBERT 采用的是 128 的输入+1D卷积（卷积核为 3），实际上在代码中是将128维的输入做了 3-gram 再过了一个线性层，这样的 embedding 与 BERT 差异较大，所以引入 IB-BERT(b) 在 BERT Large 的基础上改进了 embedding 层，缩小了 MobileBERT 与 BERT 间的差异。  
 
 ## 三、Stacked Feed-Forward Network
 &emsp;&emsp;我们知道，Transformer block 分为 Multi-Head Attention 和 Feed Forward 两个部分，这两个部分有各自的功能：  

@@ -61,7 +61,7 @@ $$
 $$
 e^{\frac{\boldsymbol{q}\cdot\boldsymbol{k}}{\sigma^2}}\approx e^{\frac{\Vert{\boldsymbol{q}\Vert^2}+\Vert{\boldsymbol{k}\Vert^2}}{2\sigma^2}}\cdot \phi(\boldsymbol{q})\cdot\phi(\boldsymbol{k})
 $$
-&emsp;&emsp;而 [《cosFormer: Rethinking Softmax in Attention》](https://arxiv.org/abs/2202.08791) 则根据 softmax 的特点分两步取代之：非负+reweight（这样真的自然么？）有：  
+&emsp;&emsp;而 [《cosFormer: Rethinking Softmax in Attention》](https://arxiv.org/abs/2202.08791) 则根据 softmax 的特点分两步取代之：非负+re-weight（这样真的自然么？）有：  
 $$
 sim(\boldsymbol{Q}_i,\boldsymbol{K}_j)=ReLU(\boldsymbol{Q}_i)ReLU(\boldsymbol{K}_j)^T\cos{(\frac{\pi}{2M}(i-j))} \\
 \boldsymbol{Q}_i^{cos}=ReLU(\boldsymbol{Q}_i)\cos{(\frac{\pi i}{2M})}
@@ -79,7 +79,7 @@ $$
 ### 4. 线性化总结
 ##### 4.0 线性化的本质：优化 softmax，利用结合律
 &emsp;&emsp;softmax 的功能：非负、缩放使训练稳定、“集中注意力”/升秩  
-&emsp;&emsp;所以不论是考虑 $e_x$ 的无偏估计还是用其他的方法拿掉 softmax，只要符合 sotfmax 的本质即可  
+&emsp;&emsp;所以不论是考虑 $e_x$ 的无偏估计还是用其他的方法拿掉 softmax，只要符合 softmax 的本质即可  
 
 ##### 4.1 适用场景
 &emsp;&emsp;我们在什么时候需要将 SA 线性化呢？苏神给出了相当精彩的推导：https://spaces.ac.cn/archives/8610 。核心观点就是 <font color=	#DC143C size=4 >理论上对于base版来说，当序列长度不超过1536时，Transformer的复杂度都是近乎线性的；当序列长度超过1536时，Transformer的计算量逐渐以Attention为主，复杂度慢慢趋于二次方，直到长度超过4608，才真正以二次项为主</font>。实际论文中很多实验也是在成千上万的序列长度下比较的..所以同样大的模型通过修改Attention来提升效率可能是走不通的。。。
