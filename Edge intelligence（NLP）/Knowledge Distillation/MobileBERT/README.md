@@ -67,5 +67,5 @@ class NoNorm(nn.Module):
 * JKT：先蒸馏中间层再蒸馏最后一层；
 * PKT：逐层蒸馏；
 
-&emsp;&emsp;讲了很多故事，实验结果显然是逐层蒸馏最后，但是只提了零点几个点，性价比相当低了。  
+&emsp;&emsp;讲了很多故事，实验结果显然是逐层蒸馏最好，但是只提了零点几个点，性价比相当低了。  
 <center><img src="9.png"  style="zoom:100%;" width="80%"/></center>

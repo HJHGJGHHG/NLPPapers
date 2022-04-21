@@ -12,9 +12,10 @@
 * **MobileBERT: a Compact Task-Agnostic BERT for Resource-Limited Devices**.  *Zhiqing Sun, Hongkun Yu, Xiaodan Song, Renjie Liu, Yiming Yang, Denny Zhou*.  (ACL 2020)  [[ACL pdf]](https://aclanthology.org/2020.acl-main.195.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/MobileBERT)  -***MobileBERT***
 * **MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers**.  *Wenhui Wang, Furu Wei, Li Dong, Hangbo Bao, Nan Yang, Ming Zhou*.  (NeurIPS 2020)  [[NeurIPS pdf]](https://proceedings.neurips.cc//paper/2020/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/MiniLM)  -***MiniLM***
 * **MiniLMv2: Multi-Head Self-Attention Relation Distillation for Compressing Pretrained Transformers**.  *Wenhui Wang, Hangbo Bao, Shaohan Huang, Li Dong, Furu Wei*.  (ACL Findings 2021)  [[Findings pdf]](https://aclanthology.org/2021.findings-acl.188.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/Edge%20intelligence%EF%BC%88NLP%EF%BC%89/Knowledge%20Distillation/MiniLMv2)  -***MiniLMv2***
-* **EfficientBERT: Progressively Searching Multilayer Perceptron via Warm-up Knowledge Distillation**.  *Chenhe Dong, Guangrun Wang, Hang Xu, Jiefeng Peng, Xiaozhe Ren, Xiaodan Liang*.  (EMNLP Findings 2021)  [[Findings pdf]](https://aclanthology.org/2021.findings-emnlp.123.pdf)  
+* **EfficientBERT: Progressively Searching Multilayer Perceptron via Warm-up Knowledge Distillation**.  *Chenhe Dong, Guangrun Wang, Hang Xu, Jiefeng Peng, Xiaozhe Ren, Xiaodan Liang*.  (EMNLP Findings 2021)  [[Findings pdf]](https://aclanthology.org/2021.findings-emnlp.123.pdf)  -***EfficientBERT***
 
-## Analysis
+## Analysis & Applications
+* (Analysis) **Supplementary Material: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers**.  *Wenhui Wang, Furu Wei, Li Dong, Hangbo Bao, Nan Yang, Ming Zhou*.  (NeurIPS 2020)  [[NeurIPS pdf]](https://proceedings.neurips.cc/paper/2020/file/3f5ee243547dee91fbd053c1c4a845aa-Supplemental.pdf)  
+* (Abstractive Summarization) **Attention Temperature Matters in Abstractive Summarization Distillation**.  *Shengqiang Zhang, Xingxing Zhang, Hangbo Bao, Furu Wei*.  (ACL 2022)  [[pdf]](https://arxiv.org/pdf/2106.03441v3.pdf)  -***PLATE***
 
-## Applications
 
