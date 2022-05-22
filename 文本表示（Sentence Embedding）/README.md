@@ -51,6 +51,7 @@ for Web Search using Clickthrough Data**  *Xiaodong He, Jianfeng Gao, Li Deng, A
 * **DeCLUTR: Deep Contrastive Learning for Unsupervised Textual Representations**  *John Giorgi, Osvald Nitski, Bo wang, Gary Bader*  (ACL 2021)  [[ACL pdf]](https://aclanthology.org/2021.acl-long.72.pdf)  [[code]](https://github.com/JohnGiorgi/DeCLUTR)  -***DeCLUTR***
 * **SNCSE: Contrastive Learning for Unsupervised Sentence Embedding
 with Soft Negative Samples**  *Hao Wang, Yangguang Li, Zhen Huang, Yong Dou, Lingpeng Kong, Jing Shao*  (preprint)  [[pdf]](https://arxiv.org/pdf/2201.05979v2.pdf)  [[code]](https://github.com/sense-gvt/sncse)  -***SNCSE***  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/SNCSE)
+* **Debiased Contrastive Learning of Unsupervised Sentence Representations**  *Kun Zhou, Beichen Zhang, Wayne Xin Zhao, Ji-Rong Wen*  (ACL 2022)  [[ACL pdf]](https://aclanthology.org/2022.acl-long.423.pdf)  [[code]](https://github.com/rucaibox/dclr)  -***DCLR***  [[notes]]()
 
 ## Analysis
 * **Representation Degeneration Problem in Training Natural Language Generation Models**  *Jun Gao, Di He, Xu Tan, Tao Qin, Liwei Wang, Tie-Yan Liu*  (ICLR2019)  [[pdf]](https://arxiv.org/pdf/1907.12009.pdf)  [[notes]](https://github.com/HJHGJGHHG/NLPPapers/tree/main/%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA%EF%BC%88Sentence%20Embedding%EF%BC%89/Analysis/BERT%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7)
