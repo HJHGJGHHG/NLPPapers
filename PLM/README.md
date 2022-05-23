@@ -21,3 +21,6 @@ Other Model Architectures such as MLPs and GAU.
 ## Positional Embedding
 Analysis on positional embedding.  
 * **RoFormer: Enhanced Transformer with Rotary Position Embedding**.  *Jianlin Su, Yu Lu, Shengfeng Pan, Bo Wen, Yunfeng Liu*.  [[pdf]](https://arxiv.org/pdf/2104.09864v2.pdf)  [[notes]]()  -***RoFormer***
+
+## Analysis
+* **Do Transformer Modifications Transfer Across Implementations and Applications?**  *Sharan Narang, Hyung Won Chung, Yi Tay, William Fedus, Thibault Fevry, Michael Matena, Karishma Malkan, Noah Fiedel, Noam Shazeer, Zhenzhong Lan, Yanqi Zhou, Wei Li, Nan Ding, Jake Marcus, Adam Roberts, Colin Raffel*  (EMNLP 2021)  [EMNLP pdf](https://aclanthology.org/2021.emnlp-main.465.pdf)
